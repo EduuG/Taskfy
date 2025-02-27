@@ -67,7 +67,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirAcessoExterno", b =>
     {
-        string frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL_DEV");
+        string frontendUrl = builder.Configuration["FRONTEND_URL"];
         b
             .WithOrigins(frontendUrl)
             .AllowAnyMethod()
