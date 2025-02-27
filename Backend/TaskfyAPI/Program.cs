@@ -11,12 +11,13 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Carregar as variáveis de ambiente
+builder.Configuration.AddEnvironmentVariables();
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
 // Configuração do Serilog
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    // .WriteTo.MSSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), 
-    //    tableName: "Logs", 
-    //    autoCreateSqlTable: true)
     .CreateLogger();
 
 builder.Host.UseSerilog((context, loggerConfiguration) =>
