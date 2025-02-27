@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     environment:
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_DATABASE};User Id=${DB_USER};Password=${SA_PASSWORD};TrustServerCertificate=True;Encrypt=True;
+      - ConnectionStrings__DefaultConnection=${ConnectionStrings__DefaultConnection}
     restart: always
     ports:
     - "8080:8080"

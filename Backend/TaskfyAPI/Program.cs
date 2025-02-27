@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Carregar as variáveis de ambiente
 builder.Configuration.AddEnvironmentVariables();
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 // Configuração do Serilog
 Log.Logger = new LoggerConfiguration()
