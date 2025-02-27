@@ -4,14 +4,6 @@
 
 > **Note:** This project is currently **a work in progress**. Features and improvements are continuously being added, and some functionalities might be incomplete or undergoing changes.
 
-## Screenshots (Don't worry, it has a dark mode! 🌙)
-
-- **Desktop view**  
-![Desktop view](https://github.com/user-attachments/assets/44ba0442-09b7-4b95-88ac-1e794f8207be)
-
-- **Mobile view**  
-![Mobile view](https://github.com/user-attachments/assets/e237c5f0-e7cb-4946-9d55-657a89618cee)
-
 ## Key Features ✨
 
 - **Secure Authentication 🔐**  
@@ -44,3 +36,12 @@
 - **UI Library:** Material UI
 - **HTTP Client:** Axios
 - **Form Validation:** Yup
+
+
+## Screenshots (Don't worry, it has a dark mode! 🌙)
+
+- **Desktop view**  
+![Desktop view](https://github.com/user-attachments/assets/44ba0442-09b7-4b95-88ac-1e794f8207be)
+
+- **Mobile view**  
+![Mobile view](https://github.com/user-attachments/assets/e237c5f0-e7cb-4946-9d55-657a89618cee)
