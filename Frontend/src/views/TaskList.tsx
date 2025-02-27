@@ -117,46 +117,49 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
     const onInsert = useCallback(async () => {
         if (!taskDescription.trim()) return;
 
-        if (!tasks.find(x => x.description.trim() === taskDescription.trim())) {
-            try {
-                let response: AxiosResponse<ITask> | ITask;
+        if (tasks.find(x => x.description.trim() === taskDescription.trim())) {
+            showFeedback("Essa tarefa já existe!", "warning");
+            return;
+        }
 
-                if (isTryingOut) {
-                    response = {
-                        id: tasks.length + 1,
-                        description: taskDescription.trim(),
-                        active: 1,
-                        order: tasks.length + 1,
-                        isCompleted: false,
-                        creationDate: new Date(),
-                    };
-                } else {
-                    response = await api.post<ITask>("/Task/Insert", {
-                        Description: taskDescription.trim(),
-                    }, {
-                        headers: {
-                            Accept: "application/json",
-                        },
-                    });
-                }
+        try {
+            let response: AxiosResponse<ITask> | ITask;
 
-                setTasks(prevTasks => [
-                    ...prevTasks, 'data' in response ? response.data : response
-                ]);
-
-                setTimeout(() => {
-                    if (listRef.current) {
-                        listRef.current.scrollTo({top: listRef.current.scrollHeight, behavior: "smooth"});
-                    }
-                }, 0);
-
-                showFeedback("Tarefa adicionada com sucesso.", "success");
-            } catch {
-                showFeedback("Ocorreu um erro ao inserir a tarefa.", "error");
+            if (isTryingOut) {
+                response = {
+                    id: tasks.length + 1,
+                    description: taskDescription.trim(),
+                    active: 1,
+                    order: tasks.length + 1,
+                    isCompleted: false,
+                    creationDate: new Date(),
+                };
+            } else {
+                response = await api.post<ITask>("/Task/Insert", {
+                    Description: taskDescription.trim(),
+                }, {
+                    headers: {
+                        Accept: "application/json",
+                    },
+                });
             }
 
-            setTaskDescription("");
+            setTasks(prevTasks => [
+                ...prevTasks, 'data' in response ? response.data : response
+            ]);
+
+            setTimeout(() => {
+                if (listRef.current) {
+                    listRef.current.scrollTo({top: listRef.current.scrollHeight, behavior: "smooth"});
+                }
+            }, 0);
+
+            showFeedback("Tarefa adicionada com sucesso.", "success");
+        } catch {
+            showFeedback("Ocorreu um erro ao inserir a tarefa.", "error");
         }
+
+        setTaskDescription("");
     }, [taskDescription, tasks, showFeedback])
 
     const onDelete = useCallback(async (id: number) => {
@@ -376,7 +379,8 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
                     </Grid>
                 </StyledCard>
 
-                <StyledCard className={"listaContainer"} id={"cardLista"} variant={"outlined"}>
+                <StyledCard className={"listaContainer"} id={"cardLista"} variant={"outlined"}
+                            sx={{justifyContent: "space-between"}}>
                     {loading &&
                         [...Array(10)].map((_, index) => (
                             <Skeleton key={index} variant={"rectangular"} animation={"wave"}
@@ -420,12 +424,13 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
 
                     {!loading && tasks.length <= 0 &&
                         <Box padding={3}>
-                            <Typography variant={"subtitle1"} color={"text.secondary"}>- Adicione uma nova tarefa -</Typography>
+                            <Typography variant={"subtitle1"} color={"text.secondary"}>- Adicione uma nova tarefa
+                                -</Typography>
                         </Box>
                     }
 
-                    {!loading && tasks.length > 0 &&
-                        <React.Fragment>
+                    <React.Fragment>
+                        {!loading && tasks.length > 0 &&
                             <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd} sensors={sensors}
                                         modifiers={[restrictToVerticalAxis, restrictToFirstScrollableAncestor]}>
                                 <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
@@ -452,24 +457,24 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
                                     </List>
                                 </SortableContext>
                             </DndContext>
+                        }
 
-                            <StyledCard id={"listaFooter"}>
+                        <StyledCard id={"listaFooter"}>
+                            <Box>
+                                <Typography>
+                                    {pendingTasksCount > 1 ? `${pendingTasksCount} Tarefas pendentes` : pendingTasksCount === 0 ? "Nenhuma tarefa pendente!" : `${pendingTasksCount} Tarefa pendente`}
+                                </Typography>
+                            </Box>
+
+                            {!isDesktop &&
                                 <Box>
-                                    <Typography>
-                                        {pendingTasksCount} {pendingTasksCount > 1 ? "Tarefas pendentes" : "Tarefa pendente"}
-                                    </Typography>
+                                    <IconButton onClick={() => handleMobileModalView(ModalViewEnum.Settings)}>
+                                        <Settings/>
+                                    </IconButton>
                                 </Box>
-
-                                {!isDesktop &&
-                                    <Box>
-                                        <IconButton onClick={() => handleMobileModalView(ModalViewEnum.Settings)}>
-                                            <Settings/>
-                                        </IconButton>
-                                    </Box>
-                                }
-                            </StyledCard>
-                        </React.Fragment>
-                    }
+                            }
+                        </StyledCard>
+                    </React.Fragment>
                 </StyledCard>
             </Grid>
 
