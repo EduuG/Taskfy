@@ -1,0 +1,39 @@
+services:
+  api:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: taskfy-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - ConnectionStrings__DefaultConnection=Server=${DB_HOST};Database=${DB_DATABASE};User Id=${DB_USER};Password=${SA_PASSWORD};TrustServerCertificate=True;Encrypt=True;
+    restart: always
+    ports:
+    - "8080:8080"
+    depends_on:
+      - sqlserver
+    networks:
+      - custom_network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_PASSWORD=${SA_PASSWORD}
+      - ACCEPT_EULA=Y
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - custom_network
+
+volumes:
+  sqlserver_data:
+    driver: local
+
+networks:
+  custom_network:
+    driver: bridge
