@@ -3,7 +3,7 @@ import {useLoading} from '../contexts/LoadingContext.tsx';
 import React, {useEffect} from "react";
 import handleError from "../utils/handleError.ts";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const api: AxiosInstance = axios.create({
     baseURL: apiUrl,
