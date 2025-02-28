@@ -73,14 +73,14 @@ namespace Backend.Controllers
                 return BadRequest("E-mail e senha são obrigatórios.");
             }
 
-            User? usuarioExistente = await _authService.ValidateCredentials(user);
+            User? storedUser = await _authService.ValidateCredentials(user);
 
-            if (usuarioExistente == null)
+            if (storedUser == null)
             {
                 return BadRequest(new { mensagem = "E-mail ou senha inválidos." });
             }
 
-            TokensDto tokens = await _authService.Login(usuarioExistente);
+            TokensDto tokens = await _authService.Login(storedUser);
 
             var accessTokenOptions = new CookieOptions
             {
@@ -104,7 +104,7 @@ namespace Backend.Controllers
             return Ok(new
             {
                 message = "Login bem-sucedido.",
-                user = new { Id = usuarioExistente.Id, Name = usuarioExistente.Name, Email = usuarioExistente.Email }
+                user = new { Id = storedUser.Id, Name = storedUser.Name, Email = storedUser.Email }
             });
         }
 
@@ -187,7 +187,7 @@ namespace Backend.Controllers
             }
 
             await _resetPasswordTokenRepository
-                .DeleteOldTokens(tokenStored.UserId); // Deletar tokens anteriores ao redefinir a senha
+                .DeleteOldTokens(tokenStored.UserId); // Delete previous tokens when resetting password
             await _userRepository.ResetPassword(tokenStored.UserId, request.NewPassword);
 
             return Ok("Senha redefinida com sucesso.");

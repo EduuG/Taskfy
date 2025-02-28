@@ -1,4 +1,3 @@
-// import "./App.css";
 import React, {useCallback, useState} from "react";
 import {
     AlertColor,
