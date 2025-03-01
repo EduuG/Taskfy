@@ -24,6 +24,7 @@ import {LogoutOutlined} from "@mui/icons-material";
 import Welcome from "./components/Welcome.tsx";
 import ForgotPassword from "./views/ForgotPassword.tsx";
 import ResetPassword from "./views/ResetPassword.tsx";
+import Logo from "./components/Logo.tsx";
 
 const App: React.FC = () => {
     const {logout, isAuthenticated} = useUser();
@@ -83,13 +84,16 @@ const App: React.FC = () => {
             {isDesktop &&
                 <Box display="flex" justifyContent={"end"} gap={2} width={"100%"} position={"absolute"}
                      padding={"10px"} paddingInline={{md: "16px", lg: "10px"}}>
-                    {isAuthenticated &&
-                        <Button onClick={handleLogout} variant={"outlined"} startIcon={<LogoutOutlined/>}>
-                            Sair
-                        </Button>
-                    }
 
-                    <ColorModeSelect/>
+                    <Box>
+                        {isAuthenticated &&
+                            <Button onClick={handleLogout} variant={"outlined"} startIcon={<LogoutOutlined/>}>
+                                Sair
+                            </Button>
+                        }
+
+                        <ColorModeSelect/>
+                    </Box>
                 </Box>
             }
 
