@@ -11,10 +11,10 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Carregar as variáveis de ambiente
+// Load environment variables
 builder.Configuration.AddEnvironmentVariables();
 
-// Configuração do Serilog
+// Serilog configuration
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
@@ -25,11 +25,11 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(context.Configuration);
 });
 
-// Configuração do banco de dados
+// Database configuration
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Injeção de dependências
+// Dependency injection
 builder.Services.AddScoped<TaskRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<AuthService>();
@@ -37,7 +37,7 @@ builder.Services.AddScoped<RefreshTokenRepository>();
 builder.Services.AddScoped<ResetPasswordTokenRepository>();
 builder.Services.AddSingleton<EmailService>();
 
-// Configuração de autenticação JWT
+// JWT Authentication configuration
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -76,14 +76,14 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Adiciona suporte a controllers e Swagger
+// Add support for controllers and Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Permite HTTP
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 var app = builder.Build();

@@ -29,7 +29,7 @@ namespace Backend.Controllers
             _authService = authService;
         }
 
-        [HttpPost("RefreshToken")] // Endpoint para gerar novo token de acesso
+        [HttpPost("RefreshToken")] // Endpoint to generate a new access token
         public async Task<IActionResult> RefreshToken()
         {
             try

@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using Backend.DTOs;
-using Backend.Models;
 using Backend.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +22,8 @@ namespace Backend.Controllers
         [HttpGet("List")]
         public async Task<IActionResult> List([FromQuery] TaskFilterDto? filter = null)
         {
-            List<Task> tarefas = await _taskRepository.ListTasks(filter, GetUserId());
-            return Ok(tarefas);
+            List<Task> tasks = await _taskRepository.ListTasks(filter, GetUserId());
+            return Ok(tasks);
         }
 
         [HttpPost("Insert")]

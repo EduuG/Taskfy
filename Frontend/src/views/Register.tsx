@@ -18,6 +18,7 @@ import {Link as RouterLink} from "react-router-dom";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import handleError from "../utils/handleError.ts";
+import Logo from "../components/Logo.tsx";
 
 interface ICadastroProps {
     showFeedback: (message: string, severity: AlertColor) => void;
@@ -67,6 +68,12 @@ const Register: React.FC<ICadastroProps> = ({showFeedback}: ICadastroProps) => {
 
     return (
         <StyledCard className={"cadastroContainer"} variant={"outlined"}>
+            <Box paddingBottom={"20px"}>
+                <Divider>
+                    <Logo height={"40px"} />
+                </Divider>
+            </Box>
+
             <Typography
                 component="h1"
                 variant="h4"

@@ -4,11 +4,11 @@
 
 # Taskfy - [https://taskfy.xyz](https://taskfy.xyz)
 
-> A task management web application built to help you stay organized and boost your productivity.
-
 > **Note:** This project is currently **a work in progress**. Features and improvements are continuously being added, and some functionalities might be incomplete or undergoing changes.
 
-![preview](https://i.imgur.com/AsxcStJ.gif)
+**Taskfy** is a task management web application built to help you stay organized and boost your productivity.
+
+![preview](./preview.gif)
 
 ## ✨ Key Features
 
@@ -26,6 +26,9 @@
 
 - **🐳 Containerized Deployment**  
   Both the API and the database run inside Docker containers, simplifying deployment and ensuring consistency across environments.
+
+- **📩 Password Reset Notifications with SendGrid**  
+  Utilizes SendGrid to send email notifications for password reset requests, ensuring secure user account management.
 
 ## 💻 Tech Stack
 

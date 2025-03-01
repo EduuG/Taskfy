@@ -20,8 +20,9 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     restart: always
-    ports:
-      - "1433:1433"
+    # Uncomment this if you need to access the db from an external network
+    # ports:
+    #   - "1433:1433"
     environment:
       - SA_PASSWORD=${SA_PASSWORD}
       - ACCEPT_EULA=Y

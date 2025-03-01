@@ -46,22 +46,22 @@ interface ITaskListProps {
 const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLogout}: ITaskListProps) => {
     const [tasks, setTasks] = useState<ITask[]>([]);
     const [taskDescription, setTaskDescription] = useState<string>("");
-    const [renamedTask, setRenamedTask] = useState<ITask | null>();
+    const [taskToRename, setTaskToRename] = useState<ITask | null>();
     const [filteredTasks, setFilteredTasks] = useState<FuseResult<ITask>[]>([]);
 
     const [loading, setLoading] = useState(true);
     const listRef = useRef<HTMLUListElement | null>(null);
     const tasksRef = useRef<(HTMLDivElement | null)[]>([]);
 
-    // Variáveis referentes a pesquisa de tarefas
+    // Variables related to task search functionality
     const [searchText, setSearchText] = useState<string>("");
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
     const fuseRef = useRef(new Fuse(tasks, {keys: ["description"], useExtendedSearch: true, threshold: 0.3}));
 
-    // Variáveis para mobile
+    // Variables for mobile-specific modal views
     const [mobileModalOpen, setMobileModalOpen] = useState<boolean>(false);
     const [mobileModalView, setMobileModalView] = useState<number>(0);
-    const [selectedTask, setSelectedTask] = useState<ITask | null>(null);
+    const [selectedTask, setSelectedTask] = useState<ITask | null>(null); // Holds the currently selected task for use in the modal
 
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
@@ -180,29 +180,29 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
     }, [showDialog, onDelete]);
 
     const onRename = useCallback((id: number, newDescription: string) => {
-        setRenamedTask({id: id, description: newDescription});
-    }, [setRenamedTask]);
+        setTaskToRename({id: id, description: newDescription});
+    }, [setTaskToRename]);
 
     const onRenameConfirm = useCallback(
         async () => {
             const tarefasAlterada = [...tasks] as ITask[];
-            const tarefaExistente = tarefasAlterada.find(x => x.id === renamedTask?.id) as ITask;
+            const tarefaExistente = tarefasAlterada.find(x => x.id === taskToRename?.id) as ITask;
 
-            if (renamedTask && renamedTask.description.trim() !== tarefaExistente.description.trim() && renamedTask.description !== "") {
-                if (tasks.find(x => x.description.toLowerCase() === renamedTask.description.toLowerCase())) {
+            if (taskToRename && taskToRename.description.trim() !== tarefaExistente.description.trim() && taskToRename.description !== "") {
+                if (tasks.find(x => x.description.toLowerCase() === taskToRename.description.toLowerCase())) {
                     showFeedback("Essa tarefa já existe!", "warning");
                     return;
                 }
 
                 try {
                     if (!isTryingOut) {
-                        await api.patch(`/Task/Rename/${renamedTask.id}`, {
-                            Description: renamedTask.description,
+                        await api.patch(`/Task/Rename/${taskToRename.id}`, {
+                            Description: taskToRename.description,
                         });
                     }
 
                     if (tarefaExistente) {
-                        tarefaExistente.description = renamedTask.description;
+                        tarefaExistente.description = taskToRename.description;
                     }
 
                     setTasks(tarefasAlterada);
@@ -212,12 +212,12 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
                 }
             }
 
-            setRenamedTask(null);
-        }, [showFeedback, tasks, renamedTask])
+            setTaskToRename(null);
+        }, [showFeedback, tasks, taskToRename])
 
     const onRenameCancel = useCallback(() => {
-        setRenamedTask(null);
-    }, [setRenamedTask]);
+        setTaskToRename(null);
+    }, [setTaskToRename]);
 
     const onChangeStatus = useCallback(async (id: number) => {
         try {
@@ -439,7 +439,7 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
                                         {tasks.map((task: ITask, index: number) => (
                                             <React.Fragment key={task.id}>
                                                 <Task tasks={task}
-                                                      renamedTask={renamedTask}
+                                                      renamedTask={taskToRename}
                                                       onRename={onRename}
                                                       onChangeStatus={onChangeStatus}
                                                       onRenameConfirm={onRenameConfirm}
