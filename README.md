@@ -4,6 +4,8 @@
 
 > **Note:** This project is currently **a work in progress**. Features and improvements are continuously being added, and some functionalities might be incomplete or undergoing changes.
 
+![preview](https://i.imgur.com/AsxcStJ.gif)
+
 ## ✨ Key Features
 
 - **🔐 Secure Authentication**  
