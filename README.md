@@ -1,5 +1,5 @@
 <a href="https://taskfy.xyz/">
-    <img src="./Frontend/public/icons/app/logo-background.svg" alt="Taskfy logo" title="Taskfy" align="right" height="60" />
+    <img src="./Frontend/public/icons/app/logo-background.png" alt="Taskfy logo" title="Taskfy" align="right" height="60" />
 </a>
 
 # Taskfy - [https://taskfy.xyz](https://taskfy.xyz)
