@@ -2,12 +2,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
-using Backend.DAOs;
 using Backend.DTOs;
 using Backend.Models;
 using Backend.Repositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using ResetPasswordToken = Backend.Models.ResetPasswordToken;
@@ -56,9 +53,9 @@ public class AuthService
 
     public string GenerateAccessToken(User user)
     {
-        var chaveSecreta = _configuration["Jwt:Key"];
-        var emissor = _configuration["Jwt:Issuer"];
-        var destinarario = _configuration["Jwt:Audience"];
+        var secretKey = _configuration["Jwt:Key"];
+        var issuer = _configuration["Jwt:Issuer"];
+        var audience = _configuration["Jwt:Audience"];
 
         var claims = new[]
         {
@@ -67,15 +64,15 @@ public class AuthService
             new Claim(ClaimTypes.Email, user.Email),
         };
 
-        var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaveSecreta));
-        var credenciais = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
-        var expiracao = DateTime.UtcNow.AddHours(Convert.ToInt32(_configuration["Jwt:ExpireHours"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+        var credenciais = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var expires = DateTime.UtcNow.AddHours(Convert.ToInt32(_configuration["Jwt:ExpireHours"]));
 
         var token = new JwtSecurityToken(
-            issuer: emissor,
-            audience: destinarario,
+            issuer: issuer,
+            audience: audience,
             claims: claims,
-            expires: expiracao,
+            expires: expires,
             signingCredentials: credenciais
         );
 
@@ -106,7 +103,7 @@ public class AuthService
     {
         try
         {
-            await _resetPasswordTokenRepository.DeleteOldTokens(user.Id); // Deleta tokens anteriores ao gerar um novo
+            await _resetPasswordTokenRepository.DeleteOldTokens(user.Id); // Delete previous tokens when generating a new one
 
             var randomNumber = new byte[64];
             using (var rng = RandomNumberGenerator.Create())

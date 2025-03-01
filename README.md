@@ -1,10 +1,14 @@
-# Taskfy - [https://taskfy.xyz](https://taskfy.xyz)
+<a href="https://taskfy.xyz/">
+    <img src="./Frontend/public/icons/app/logo-background.svg" alt="Taskfy logo" title="Taskfy" align="right" height="60" />
+</a>
 
-> A task management web application built to help you stay organized and boost your productivity.
+# Taskfy - [https://taskfy.xyz](https://taskfy.xyz)
 
 > **Note:** This project is currently **a work in progress**. Features and improvements are continuously being added, and some functionalities might be incomplete or undergoing changes.
 
-![preview](https://i.imgur.com/AsxcStJ.gif)
+**Taskfy** is a task management web application built to help you stay organized and boost your productivity.
+
+![preview](./preview.gif)
 
 ## ✨ Key Features
 

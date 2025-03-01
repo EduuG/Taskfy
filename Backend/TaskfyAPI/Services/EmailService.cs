@@ -12,23 +12,10 @@ namespace Backend.Services
         private readonly IConfiguration _configuration;
         private readonly string _sendGridApiKey;
         
-        // Mailhog
-       // private readonly string _smtpServer;
-       // private readonly int _smtpPort;
-       // private readonly string _senderEmail;
-       // private readonly string _senderName;
-
         public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
             _sendGridApiKey = _configuration["SendGrid:ApiKey"];
-            
-            // Mailhog
-           // var emailConfig = configuration.GetSection("EmailSettings");
-           // _smtpServer = emailConfig["SmtpServer"];
-           // _smtpPort = int.Parse(emailConfig["SmtpPort"]);
-           // _senderEmail = emailConfig["SenderEmail"];
-           // _senderName = emailConfig["SenderName"];
         }
 
         public async Task SendPasswordResetEmail(string email, string resetLink)
@@ -42,33 +29,8 @@ namespace Backend.Services
            var plainTextContent = $"Para redefinir sua senha, clique no link abaixo: {resetLink}";
            
            var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
-
-          // msg.MailSettings = new MailSettings()
-          // {
-          //     SandboxMode = new SandboxMode
-          //     {
-          //         Enable = true,
-          //     }
-          // };
            
-          var response = await client.SendEmailAsync(msg);
-          
-           // Mailhog
-          // using var client = new SmtpClient(_smtpServer, _smtpPort);
-          // client.Credentials = CredentialCache.DefaultNetworkCredentials;
-          // client.EnableSsl = false;
-
-          // var message = new MailMessage
-          // {
-          //     From = new MailAddress(_senderEmail, _senderName),
-          //     Subject = "Redefinição de senha",
-          //     Body =
-          //         $"<p>Para redefinir sua senha, clique no link abaixo:</p><a href='{resetLink}'>Redefinir Senha</a>",
-          //     IsBodyHtml = true
-          // };
-          // 
-          // message.To.Add(_senderEmail);
-          // await client.SendMailAsync(message);
+           var response = await client.SendEmailAsync(msg);
         }
     }
 }

@@ -19,6 +19,7 @@ import {useFormik} from "formik";
 import * as yup from "yup";
 import {LoginRounded} from "@mui/icons-material";
 import handleError from "../utils/handleError.ts";
+import Logo from "../components/Logo.tsx";
 
 interface ILoginProps {
     showFeedback: (message: string, severity: AlertColor) => void;
@@ -60,6 +61,10 @@ const Login: React.FC<ILoginProps> = ({showFeedback}: ILoginProps) => {
     return (
         <React.Fragment>
             <StyledCard className={"loginContainer"} variant={"outlined"}>
+                <Divider>
+                    <Logo height={"40px"} />
+                </Divider>
+
                 <Typography
                     component="h1"
                     variant="h4"
