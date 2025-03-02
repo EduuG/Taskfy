@@ -24,7 +24,6 @@ import {LogoutOutlined} from "@mui/icons-material";
 import Welcome from "./components/Welcome.tsx";
 import ForgotPassword from "./views/ForgotPassword.tsx";
 import ResetPassword from "./views/ResetPassword.tsx";
-import Logo from "./components/Logo.tsx";
 
 const App: React.FC = () => {
     const {logout, isAuthenticated} = useUser();
