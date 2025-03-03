@@ -6,8 +6,8 @@ interface ILogoProps {
 }
 
 const Logo: React.FC<ILogoProps> = ({height}: ILogoProps) => {
-    const { mode } = useColorScheme();
-    const isDarkMode = mode === 'dark';
+    const { mode, systemMode } = useColorScheme();
+    const isDarkMode = mode === 'dark' || systemMode === 'dark';
 
     const logoStyle = {
         height,

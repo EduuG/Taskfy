@@ -6,8 +6,8 @@ import {Link as RouterLink} from "react-router-dom";
 import {useColorScheme} from "@mui/material/styles";
 
 const NotFound: React.FC = () => {
-    const { mode } = useColorScheme();
-    const isDarkMode = mode === 'dark';
+    const { mode, systemMode } = useColorScheme();
+    const isDarkMode = mode === 'dark' || systemMode === 'dark';
 
     const style = {
         display: "flex",
