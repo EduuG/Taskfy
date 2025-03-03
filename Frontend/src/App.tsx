@@ -84,15 +84,13 @@ const App: React.FC = () => {
                 <Box display="flex" justifyContent={"end"} gap={2} width={"100%"} position={"absolute"}
                      padding={"10px"} paddingInline={{md: "16px", lg: "10px"}}>
 
-                    <Box>
-                        {isAuthenticated &&
-                            <Button onClick={handleLogout} variant={"outlined"} startIcon={<LogoutOutlined/>}>
-                                Sair
-                            </Button>
-                        }
+                      {isAuthenticated &&
+                          <Button onClick={handleLogout} variant={"outlined"} startIcon={<LogoutOutlined/>}>
+                              Sair
+                          </Button>
+                      }
 
-                        <ColorModeSelect/>
-                    </Box>
+                      <ColorModeSelect/>
                 </Box>
             }
 
