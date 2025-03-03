@@ -116,7 +116,7 @@ const Task: React.FC<ITaskProps> = ({
                         />
 
                         {tasks.creationDate && isDesktop &&
-                            <Typography color={"grey"}>{`${getTaskDate.date} às ${getTaskDate.time}`}</Typography>
+                            <Typography color={"grey"} textAlign={"right"}>{`${getTaskDate.date} às ${getTaskDate.time}`}</Typography>
                         }
                     </>
                 }

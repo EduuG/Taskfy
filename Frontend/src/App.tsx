@@ -24,6 +24,7 @@ import {LogoutOutlined} from "@mui/icons-material";
 import Welcome from "./components/Welcome.tsx";
 import ForgotPassword from "./views/ForgotPassword.tsx";
 import ResetPassword from "./views/ResetPassword.tsx";
+import NotFound from "./components/NotFound.tsx";
 
 const App: React.FC = () => {
     const {logout, isAuthenticated} = useUser();
@@ -103,6 +104,7 @@ const App: React.FC = () => {
                                 <Route path="/Register" element={<Register showFeedback={showFeedback}/>}/>
                                 <Route path="/ForgotPassword" element={<ForgotPassword showFeedback={showFeedback}/>}/>
                                 <Route path="/ResetPassword" element={<ResetPassword showFeedback={showFeedback}/>}/>
+                                <Route path="*" element={<NotFound />} />
                             </Route>
 
                             <Route element={<PrivateRoute/>}>
@@ -114,7 +116,7 @@ const App: React.FC = () => {
                             </Route>
                         </Routes>
                         :
-                        <Box>
+                        <Box  display={"flex"} justifyContent={"center"} alignItems={"center"}>
                             <CircularProgress/>
                         </Box>
                     }
