@@ -20,15 +20,17 @@ import PrivateRoute from "./components/PrivateRoute.tsx";
 import PublicRoute from "./components/PublicRoute.tsx";
 import AlertSnackBar from "./components/AlertSnackBar.tsx";
 import ConfirmationDialog from "./components/ConfirmationDialog.tsx";
-import {LogoutOutlined} from "@mui/icons-material";
+import {GitHub, LogoutOutlined} from "@mui/icons-material";
 import Welcome from "./components/Welcome.tsx";
 import ForgotPassword from "./views/ForgotPassword.tsx";
 import ResetPassword from "./views/ResetPassword.tsx";
 import NotFound from "./components/NotFound.tsx";
+import {useLocation} from "react-router-dom";
 
 const App: React.FC = () => {
-    const {logout, isAuthenticated} = useUser();
+    const {logout} = useUser();
     const {isUserLoading} = useUser();
+    const location = useLocation();
 
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [snackBarOpen, setSnackBarOpen] = useState<boolean>(false);
@@ -85,13 +87,17 @@ const App: React.FC = () => {
                 <Box display="flex" justifyContent={"end"} gap={2} width={"100%"} position={"absolute"}
                      padding={"10px"} paddingInline={{md: "16px", lg: "10px"}}>
 
-                      {isAuthenticated &&
-                          <Button onClick={handleLogout} variant={"outlined"} startIcon={<LogoutOutlined/>}>
-                              Sair
-                          </Button>
-                      }
+                    <Button href={"https://github.com/EduuG/Taskfy"} target={"_blank"} variant={"outlined"} startIcon={<GitHub/>}>
+                        GitHub
+                    </Button>
 
-                      <ColorModeSelect/>
+                    <ColorModeSelect/>
+
+                    {location.pathname === "/" && (
+                        <Button onClick={handleLogout} variant={"outlined"} startIcon={<LogoutOutlined/>}>
+                            Sair
+                        </Button>
+                    )}
                 </Box>
             }
 
@@ -104,7 +110,7 @@ const App: React.FC = () => {
                                 <Route path="/Register" element={<Register showFeedback={showFeedback}/>}/>
                                 <Route path="/ForgotPassword" element={<ForgotPassword showFeedback={showFeedback}/>}/>
                                 <Route path="/ResetPassword" element={<ResetPassword showFeedback={showFeedback}/>}/>
-                                <Route path="*" element={<NotFound />} />
+                                <Route path="*" element={<NotFound/>}/>
                             </Route>
 
                             <Route element={<PrivateRoute/>}>
@@ -116,7 +122,7 @@ const App: React.FC = () => {
                             </Route>
                         </Routes>
                         :
-                        <Box  display={"flex"} justifyContent={"center"} alignItems={"center"}>
+                        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
                             <CircularProgress/>
                         </Box>
                     }

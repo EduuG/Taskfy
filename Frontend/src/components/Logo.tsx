@@ -13,6 +13,7 @@ const Logo: React.FC<ILogoProps> = ({height}: ILogoProps) => {
         height,
         transition: "filter 0.3s ease",
         filter: `${isDarkMode ? "invert(1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5))" : "drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))"} `,
+        marginTop: "3px",
     }
 
     return(

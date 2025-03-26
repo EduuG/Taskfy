@@ -100,17 +100,29 @@ const StyledCard = styled(MuiCard)(({ theme }) => ({
         padding: "10px",
         borderWidth: "0px 0px 1px 0px",
     },
-    '&#listaFooter': {
-        flexDirection: 'row',
+    '&.cardShell': {
         width: "100%",
         minHeight: "50px",
         gap: theme.spacing(0),
         borderRadius: "0",
         boxShadow: 'none',
         padding: "10px",
-        borderWidth: "1px 0px 0px 0px",
-        justifyContent: "space-between",
-        alignItems: 'center',
+        '&.header': {
+            justifyContent: "center",
+            borderWidth: "0px 0px 1px 0px",
+        },
+        '&.footer': {
+            flexDirection: 'row',
+            borderWidth: "1px 0px 0px 0px",
+            justifyContent: "space-between",
+            alignItems: 'center',
+        },
+        '&.authFooter': {
+            flexDirection: 'row',
+            borderWidth: "1px 0px 0px 0px",
+            justifyContent: "end",
+        },
+
         [`& .${buttonBaseClasses.root}`]: {
             display: 'flex',
             gap: 8,
@@ -143,9 +155,11 @@ const StyledCard = styled(MuiCard)(({ theme }) => ({
         maxWidth: '600px',
         alignSelf: 'center',
     },
-    '&.loginContainer, &.cadastroContainer' : {
+    '&.authContainer' : {
         width: '450px',
         margin: 'auto',
+        padding: 0,
+        gap: 0,
     },
     '&.containerPesquisar': {
         padding: theme.spacing(0),

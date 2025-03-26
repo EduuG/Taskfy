@@ -10,7 +10,6 @@ import {
     Typography,
     useMediaQuery, useTheme
 } from "@mui/material";
-import StyledCard from "../components/StyledCard.tsx";
 import React from "react";
 import {useUser} from "../contexts/UserContext.tsx";
 import {useNavigate} from "react-router";
@@ -18,7 +17,7 @@ import {Link as RouterLink} from "react-router-dom";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import handleError from "../utils/handleError.ts";
-import Logo from "../components/Logo.tsx";
+import AuthLayout from "../components/AuthLayout.tsx";
 
 interface ICadastroProps {
     showFeedback: (message: string, severity: AlertColor) => void;
@@ -67,13 +66,7 @@ const Register: React.FC<ICadastroProps> = ({showFeedback}: ICadastroProps) => {
     })
 
     return (
-        <StyledCard className={"cadastroContainer"} variant={"outlined"}>
-            <Box paddingBottom={"20px"}>
-                <Divider>
-                    <Logo height={"40px"} />
-                </Divider>
-            </Box>
-
+        <AuthLayout>
             <Typography
                 component="h1"
                 variant="h4"
@@ -187,7 +180,7 @@ const Register: React.FC<ICadastroProps> = ({showFeedback}: ICadastroProps) => {
                     </Link>
                 </Typography>
             </Box>
-        </StyledCard>
+        </AuthLayout>
     )
 }
 

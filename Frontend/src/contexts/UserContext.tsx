@@ -109,17 +109,20 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}
     }
 
     const logout = async () => {
-        try {
-            const response = await api.post("/User/Logout");
+        if (isAuthenticated) {
+            try {
+                const response = await api.post("/User/Logout");
 
-            setIsAuthenticated(false);
-            setIsTryingOut(false);
-            setIsAuthenticated(false);
-            setUserData(null);
-            return response.data;
-        } catch (error) {
-            throw new Error("Ocorreu um erro ao fazer logout: " + error);
+                setIsAuthenticated(false);
+                setIsTryingOut(false);
+                setUserData(null);
+                return response.data;
+            } catch (error) {
+                throw new Error("Ocorreu um erro ao fazer logout: " + error);
+            }
         }
+
+        navigate("/Login");
     }
 
     const tryWithoutLogin = async () => {

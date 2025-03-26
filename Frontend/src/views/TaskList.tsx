@@ -8,7 +8,7 @@ import {
     TextField, Typography, useMediaQuery, useTheme,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {Add, CloseSharp, Delete, Edit, EditNote, Logout, Search, Settings} from "@mui/icons-material";
+import {Add, CloseSharp, Delete, Edit, EditNote, GitHub, Logout, Search, Settings} from "@mui/icons-material";
 import ITask from "../interfaces/ITask.ts";
 import StyledCard from "../components/StyledCard.tsx";
 import Task from "../components/Task.tsx";
@@ -459,7 +459,7 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
                             </DndContext>
                         }
 
-                        <StyledCard id={"listaFooter"}>
+                        <StyledCard className={"cardShell footer"}>
                             <Box>
                                 <Typography>
                                     {pendingTasksCount > 1 ? `${pendingTasksCount} Tarefas pendentes` : pendingTasksCount === 0 ? "Nenhuma tarefa pendente!" : `${pendingTasksCount} Tarefa pendente`}
@@ -478,6 +478,7 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
                 </StyledCard>
             </Grid>
 
+            {/* TODO: Separate the modal logic into its own component */}
             <Modal open={mobileModalOpen} onClose={handleMobileModalClose} closeAfterTransition>
                 <Fade in={mobileModalOpen}>
                     <Box
@@ -495,6 +496,17 @@ const TaskList: React.FC<ITaskListProps> = ({showFeedback, showDialog, handleLog
                     >
                         {mobileModalView === ModalViewEnum.Settings && (
                             <List sx={{width: "100%"}}>
+                                <ListItem disablePadding>
+                                    <ListItemButton href={"https://github.com/EduuG/Taskfy"} target={"_blank"}>
+                                        <ListItemIcon>
+                                            <GitHub/>
+                                        </ListItemIcon>
+                                        <ListItemText primary={"GitHub"}/>
+                                    </ListItemButton>
+                                </ListItem>
+
+                                <Divider />
+
                                 <ListItem disablePadding>
                                     <ListItemButton>
                                         <ListItemIcon>
